@@ -5,6 +5,7 @@
   "author": "Sayan Moitra",
   "private": true,
   "scripts": {
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-native start",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
