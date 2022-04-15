@@ -4,7 +4,7 @@
 <template>
   <div id="login">
     <div class="form">
-      <h1>AWSome Builder Demo Login*</h1>
+      <h1>AWS Builder Demo Login*</h1>
       <form @submit.prevent="onSubmit">
         <input
           v-model="user"
