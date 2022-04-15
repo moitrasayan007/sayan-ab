@@ -2,6 +2,15 @@
 # SPDX-License-Identifier: MIT-0
 
 /*=======================================================
+      AWS CodeStar Connection for CodePipeline
+========================================================*/
+
+resource "aws_codestarconnections_connection" "aws_codestar_create" {
+  name          = "example-connection"
+  provider_type = "GitHub"
+}
+
+/*=======================================================
       AWS CodePipeline for build and deployment
 ========================================================*/
 
@@ -16,8 +25,22 @@ resource "aws_codepipeline" "aws_codepipeline" {
 
   stage {
     name = "Source"
-
     action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeStarSourceConnection"
+      version          = "1"
+      output_artifacts = ["SourceArtifact"]
+      configuration = {
+        ConnectionArn    = aws_codestarconnections_connection.aws_codestar_create.arn
+        FullRepositoryId = var.repo_name
+        BranchName       = var.branch
+      }
+    }
+  }
+
+    /*action {
       name             = "Source"
       category         = "Source"
       owner            = "ThirdParty"
@@ -33,7 +56,7 @@ resource "aws_codepipeline" "aws_codepipeline" {
         PollForSourceChanges = true
       }
     }
-  }
+  }*/
 
   stage {
     name = "Build"

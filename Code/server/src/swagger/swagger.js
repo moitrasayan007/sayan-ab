@@ -9,9 +9,9 @@ const options = {
     info: {
       title: 'AWS Demo',
       version: '1.0.0',
-      description: 'An AWS Demo for a full stack application with Amazon ECS, applying DevOps practices',
+      description: 'An AWS Demo with Amazon ECS, applying DevOps practices',
       contact: {
-        email: 'burkhmar@amazon.de'
+        email: 'moitrasa@amazon.com'
       }
     },
     tags: [

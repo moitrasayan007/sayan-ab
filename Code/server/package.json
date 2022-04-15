@@ -1,8 +1,8 @@
 {
-  "name": "aws-ecs-demo-backend",
+  "name": "awsome-ecs-demo-backend",
   "version": "1.0.0",
   "description": "AWS Demo",
-  "author": "Marina Burkhardt",
+  "author": "Sayan Moitra",
   "private": true,
   "license": "MIT",
   "main": "app.js",

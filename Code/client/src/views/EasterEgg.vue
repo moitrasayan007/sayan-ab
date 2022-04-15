@@ -3,7 +3,7 @@
 
 <template>
   <div class="about">
-    <h3>Just a demo ;)</h3>
+    <h3>Demo on Fargate</h3>
     
   </div>
 </template>

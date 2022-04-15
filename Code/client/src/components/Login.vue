@@ -4,7 +4,7 @@
 <template>
   <div id="login">
     <div class="form">
-      <h1>AWS Demo Login*</h1>
+      <h1>AWSome Builder Demo Login*</h1>
       <form @submit.prevent="onSubmit">
         <input
           v-model="user"
@@ -25,7 +25,7 @@
         </button>
       </form>
       <br>
-      <h5>*No auth was implemented, just a Vue.js demo component</h5>
+      <h5>*No auth was implemented for this demo.</h5>
     </div>
   </div>
 </template>

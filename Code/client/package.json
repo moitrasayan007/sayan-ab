@@ -1,8 +1,8 @@
 {
-  "name": "aws-ecs-demo-frontend",
+  "name": "awsome-ecs-demo-frontend",
   "version": "0.1.0",
-  "description": "AWS Demo",
-  "author": "Marina Burkhardt",
+  "description": "AWSome Builder Demo",
+  "author": "Sayan Moitra",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

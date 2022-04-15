@@ -11,7 +11,7 @@
                 class="ml-2"
                 to="/main"
                 style="color:white"
-                >Full Stack Demo with Amazon ECS + DevOps practices
+                >Amazon ECS Fargate
             </router-link>
         </b-navbar-brand>
 
