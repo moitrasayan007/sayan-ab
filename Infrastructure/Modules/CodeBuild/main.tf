@@ -94,6 +94,15 @@ resource "aws_codebuild_project" "aws_codebuild" {
     buildspec = var.buildspec_path
   }
 
+  /*vpc_config {
+    vpc_id = var.vpc_id
+
+    subnets = var.subnets
+    security_group_ids = [
+      var.sg
+    ]
+  }*/
+
   tags = {
     CreatedBy = "Terraform"
   }

@@ -9,6 +9,11 @@ resource "aws_ecr_repository" "ecr_repository" {
   name                 = var.name
   image_tag_mutability = "MUTABLE"
 
+  encryption_configuration {
+    encryption_type = "KMS"
+    kms_key = var.kms_key
+  }
+
   tags = {
     Created_by = "Terraform"
   }

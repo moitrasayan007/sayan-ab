@@ -8,6 +8,11 @@
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "Cluster-${var.name}"
 
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+
   tags = {
     Created_by = "Terraform"
   }

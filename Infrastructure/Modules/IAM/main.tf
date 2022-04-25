@@ -5,6 +5,10 @@
       AWS IAM for different resources
 ============================================*/
 
+module "kms" {
+  source = "../KMS"
+}
+
 # ------- IAM Roles -------
 resource "aws_iam_role" "ecs_task_excecution_role" {
   count              = var.create_ecs_role == true ? 1 : 0
@@ -211,6 +215,14 @@ data "aws_iam_policy_document" "role_policy_devops_role" {
     resources = var.code_build_projects
   }
   statement {
+    sid    = "AllowCodebuildActionsforVPC"
+    effect = "Allow"
+    actions = [
+      "ec2:*"
+    ]
+    resources = ["*"]
+  }
+  statement {
     sid    = "AllowCodebuildList"
     effect = "Allow"
     actions = [
@@ -271,6 +283,17 @@ data "aws_iam_policy_document" "role_policy_devops_role" {
     resources = ["*"]
   }
   statement {
+    sid    = "DecryptKMSKey"
+    effect = "Allow"
+
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt"
+    ]
+
+    resources = ["*"]
+  }
+  statement {
     sid    = "AllowCECSServiceActions"
     effect = "Allow"
     actions = [
@@ -313,6 +336,19 @@ data "aws_iam_policy_document" "role_policy_devops_role" {
       "logs:PutLogEvents"
     ]
     resources = ["*"]
+  }
+  statement {
+    sid    = "AllowCodeCommitRepoAccess"
+    effect = "Allow"
+    actions = [
+      "codecommit:ListBranches",
+      "codecommit:ListRepositories",
+      "codecommit:GetBranch",
+      "codecommit:GetCommit",
+      "codecommit:UploadArchive",
+      "codecommit:GetUploadArchiveStatus"
+    ]
+    resources = ["arn:aws:codecommit:us-east-1:867881815416:ab3-octank"]
   }
 }
 

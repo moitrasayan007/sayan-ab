@@ -11,6 +11,12 @@ provider "aws" {
   region  = var.aws_region
 }
 
+# ------- AWS KMS resource
+
+module "kms" {
+  source = "./Modules/KMS"
+}
+
 # ------- Random numbers intended to be used as unique identifiers for resources -------
 resource "random_id" "RANDOM_ID" {
   byte_length = "2"
@@ -88,6 +94,14 @@ module "security_group_alb_server" {
   ingress_port        = 80
 }
 
+# ------- Creating Security Group for AWS CodeBuild -------
+module "codebuild_security_group" {
+  source              = "./Modules/SecurityGroup"
+  name                = "${var.environment_name}-codebuild"
+  description         = "Controls access for CodeBuild"
+  vpc_id              = module.networking.aws_vpc
+}
+
 # ------- Creating Security Group for the client ALB -------
 module "security_group_alb_client" {
   source              = "./Modules/SecurityGroup"
@@ -139,12 +153,14 @@ module "ecs_role_policy" {
 module "ecr_server" {
   source = "./Modules/ECR"
   name   = "repo-server"
+  kms_key = module.kms.kms_arn
 }
 
 # ------- Creating client ECR Repository to store Docker Images -------
 module "ecr_client" {
   source = "./Modules/ECR"
   name   = "repo-client"
+  kms_key = module.kms.kms_arn
 }
 
 # ------- Creating ECS Task Definition for the server -------
@@ -298,6 +314,9 @@ module "codebuild_server" {
   account_id             = data.aws_caller_identity.id_current_account.account_id
   ecr_repo_url           = module.ecr_server.ecr_repository_url
   folder_path            = var.folder_path_server
+  #vpc_id                 = module.networking.aws_vpc
+  #subnets                = [module.networking.private_subnets_client[0], module.networking.private_subnets_client[1]]
+  #sg                     = module.codebuild_security_group.sg_id
   buildspec_path         = var.buildspec_path
   task_definition_family = module.ecs_taks_definition_server.task_definition_family
   container_name         = var.container_name["server"]
@@ -316,6 +335,9 @@ module "codebuild_client" {
   account_id             = data.aws_caller_identity.id_current_account.account_id
   ecr_repo_url           = module.ecr_client.ecr_repository_url
   folder_path            = var.folder_path_client
+  #vpc_id                 = module.networking.aws_vpc
+  #subnets                = [module.networking.private_subnets_client[0], module.networking.private_subnets_client[1]]
+  #sg                     = module.codebuild_security_group.sg_id
   buildspec_path         = var.buildspec_path
   task_definition_family = module.ecs_taks_definition_client.task_definition_family
   container_name         = var.container_name["client"]

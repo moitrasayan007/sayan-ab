@@ -59,6 +59,21 @@ variable "server_alb_url" {
   default     = ""
 }
 
+/*variable "subnets" {
+  description = "The subnet id"
+  type        = list(string)
+}
+
+variable "sg" {
+  description = "The security group used"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC where the security group will take place"
+  type        = string
+}*/
+
 variable "ecs_task_role" {
   description = "The name of the ECS Task role to specify in the Task Definition"
   type        = string

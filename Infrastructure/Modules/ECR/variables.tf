@@ -5,3 +5,8 @@ variable "name" {
   description = "The name of your ECR repository"
   type        = string
 }
+
+variable "kms_key" {
+  description = "The arn of KMS key"
+  type        = string
+}
